@@ -31,8 +31,9 @@ BASE = "https://www.fuel-finder.service.gov.uk"
 TOKEN_URL = os.environ.get("FUEL_FINDER_TOKEN_URL", f"{BASE}/api/v1/oauth/generate_access_token")
 PRICES_URL = os.environ.get("FUEL_FINDER_PRICES_URL", f"{BASE}/api/v1/pfs/fuel-prices")
 STATIONS_URL = os.environ.get("FUEL_FINDER_STATIONS_URL", f"{BASE}/api/v1/pfs")
-HEADERS_BASE = {"Accept": "application/json", "Content-Type": "application/json",
-                "User-Agent": "warwick-ec331-research"}
+HEADERS_BASE = {"Accept": "application/json", "Content-Type": "application/json"}
+if os.environ.get("FUEL_FINDER_USER_AGENT"):  # copy the one from your working script if it sets one
+    HEADERS_BASE["User-Agent"] = os.environ["FUEL_FINDER_USER_AGENT"]
 
 DATA = Path(os.environ.get("FUEL_DATA_DIR", "data"))
 STATE = DATA / "state" / "latest.csv"
@@ -57,10 +58,24 @@ def request_with_retry(method, url, tries=4, **kw):
 
 
 def get_token():
-    r = request_with_retry("POST", TOKEN_URL, headers=HEADERS_BASE, json={
-        "client_id": os.environ["FUEL_FINDER_CLIENT_ID"],
-        "client_secret": os.environ["FUEL_FINDER_CLIENT_SECRET"]})
-    r.raise_for_status()
+    cid = os.environ.get("FUEL_FINDER_CLIENT_ID", "").strip()
+    secret = os.environ.get("FUEL_FINDER_CLIENT_SECRET", "").strip()
+    if not cid or not secret:
+        raise RuntimeError("FUEL_FINDER_CLIENT_ID or FUEL_FINDER_CLIENT_SECRET is empty: "
+                           "check the secret names in Settings > Secrets and variables > Actions")
+    print(f"Token URL: {TOKEN_URL} | client_id starts {cid[:4]}..., length {len(cid)}; "
+          f"secret length {len(secret)}")
+    r = request_with_retry("POST", TOKEN_URL, headers=HEADERS_BASE,
+                           json={"client_id": cid, "client_secret": secret})
+    if not r.ok:
+        body = r.text[:600].replace("\n", " ")
+        looks_like_firewall = ("<html" in body.lower() or "cloudflare" in body.lower()
+                               or "request blocked" in body.lower() or "access denied" in body.lower())
+        hint = ("The reply is an HTML block page, so a firewall rejected this machine's IP "
+                "before your credentials were checked." if looks_like_firewall else
+                "The reply is from the API itself: check the URL and credentials against your local script.")
+        raise RuntimeError(f"Token request HTTP {r.status_code} (server: {r.headers.get('server', '?')}). "
+                           f"{hint} Body: {body}")
     body = r.json()
     payload = body.get("data", body) if isinstance(body, dict) else {}
     token = payload.get("access_token")
