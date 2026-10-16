@@ -1,0 +1,2 @@
+fetched_at,status,price_rows,new_events,note
+2026-10-16T16:41:19+00:00,error,0,0,403 Client Error: Forbidden for url: https://www.fuel-finder.service.gov.uk/api/v1/oauth/generate_access_token
