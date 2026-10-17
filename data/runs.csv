@@ -19,3 +19,4 @@ fetched_at,status,price_rows,new_events,note
 2026-10-17T01:32:24+00:00,error,0,0,Token request HTTP 403 (server: CloudFront). The reply is from the API itself: check the URL and credentials against your local script. Body: 
 2026-10-17T02:03:00+00:00,error,0,0,Token request HTTP 403 (server: CloudFront). The reply is from the API itself: check the URL and credentials against your local script. Body: 
 2026-10-17T02:31:19+00:00,error,0,0,Token request HTTP 403 (server: CloudFront). The reply is from the API itself: check the URL and credentials against your local script. Body: 
+2026-10-17T03:01:51+00:00,error,0,0,Token request HTTP 403 (server: CloudFront). The reply is from the API itself: check the URL and credentials against your local script. Body: 
