@@ -278,3 +278,4 @@ fetched_at,status,price_rows,new_events,note
 2026-10-22T19:38:02+00:00,ok,26520,0,
 2026-10-22T20:07:03+00:00,ok,26520,54,
 2026-10-22T20:37:03+00:00,ok,26520,5,
+2026-10-22T21:07:29+00:00,error,0,0,"HTTPSConnectionPool(host='www.fuel-finder.service.gov.uk', port=443): Read timed out. (read timeout=60)"
