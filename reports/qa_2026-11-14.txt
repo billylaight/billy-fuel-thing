@@ -1,0 +1,11 @@
+Raw rows: 744,278 from 900 fetches (2026-10-19 18:36:39+00:00 to 2026-11-14 07:07:02+00:00)
+Stations: 8,152; fuel types: ['B10', 'B7_PREMIUM', 'B7_STANDARD', 'E10', 'E5', 'HVO']
+Rows with unparseable price or timestamp: 0
+Price records: 107,539, of which actual price changes: 107,142
+  out of range (80-300p): 6
+  jumps over 20p: 174
+  median reporting lag (min, changes after scraper start): 19.983333333333334
+Daily panel rows: 1,085,845
+  stale (> 14 days since update): 395,555
+  station missing from your feed (days after scraper start): 79,732
+  E10 > B7 by more than 5p: 763
