@@ -1887,3 +1887,4 @@ fetched_at,status,price_rows,new_events,note
 2026-11-25T13:07:13+00:00,error,0,0,"HTTPSConnectionPool(host='www.fuel-finder.service.gov.uk', port=443): Max retries exceeded with url: /api/v1/oauth/generate_access_token (Caused by NameResolutionError(""HTTPSConnection(host='www.fuel-"
 2026-11-25T13:37:03+00:00,ok,26569,19457,
 2026-11-25T14:07:03+00:00,ok,26569,199,
+2026-11-25T14:37:03+00:00,ok,26569,328,
